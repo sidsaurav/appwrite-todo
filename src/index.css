@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'RetroInline';
+    src: url('./utils/fonts/AnsleyDisplayInline.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'RetroReg';
+    src: url('./utils/fonts/AnsleyDisplayRegular.ttf') format('truetype');
+}
