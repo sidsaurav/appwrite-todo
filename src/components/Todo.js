@@ -54,7 +54,7 @@ const Todo = () => {
   return (
     <div className='mx-24 mt-20 borde-4 borde-black flex flex-col justify-start'>
       {/* Heading Starts */}
-      <div className='text-center font-title text-6xl borde-4 borde-black'>
+      <div className='text-center font-title text-6xl borde-4 borde-black mb-6'>
         To-Do List
       </div>
       {/* Heading Ends */}
