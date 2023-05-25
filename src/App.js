@@ -1,15 +1,12 @@
 import React from "react"
-import { Client } from "appwrite"
 import Todo from "./Todo"
-
-const client = new Client()
-client.setEndpoint("https://cloud.appwrite.io/v1").setProject("retromedia")
+import { ServerContextProvider } from "./contexts/ServerContext"
 
 const App = () => {
   return (
-    <>
+    <ServerContextProvider>
       <Todo />
-    </>
+    </ServerContextProvider>
   )
 }
 
