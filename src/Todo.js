@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from "react"
-import useServer from "./hooks/useServer"
-
+import api from "./server/api"
 const Todo = () => {
-  const { account, database } = useServer()
-
   const [text, setText] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const addDoc = await database.createDocument(
-        process.env.REACT_APP_DATABASE_ID,
-        process.env.REACT_APP_COLLECTION_ID,
-        "unique()",
-        { data: text }
-      )
+      const addDoc = api.createDocument()
       setText("")
       alert("Field Added Successfully")
     } catch (err) {
@@ -24,7 +16,10 @@ const Todo = () => {
     }
   }
 
-  useEffect(() => {}, [])
+  useEffect(async () => {
+    const res = await api.listDocuments()
+    console.log(res)
+  })
 
   return (
     <div className='mx-24 mt-20 borde-4 borde-black flex flex-col justify-center'>
