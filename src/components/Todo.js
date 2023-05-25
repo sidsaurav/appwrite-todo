@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react"
-import api from "./server/api"
+import api from "../server/api"
+import Spinner from "./Spinner"
 const Todo = () => {
   const [todoList, setTodoList] = useState([])
+  const [loading, setLoading] = useState(false)
   const [text, setText] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      setLoading(true)
       const addDoc = await api.createDocument({ data: text })
+      setLoading(false)
       setText("")
-      setTodoList([...todoList, text])
-      alert("Field Added Successfully")
+      setTodoList([...todoList, { data: text, id: addDoc.$id }])
+      //   alert("Field Added Successfully")
     } catch (err) {
+      setLoading(false)
       alert("Some Issue Encountered")
       setText("")
       console.log(err.message)
@@ -20,11 +25,14 @@ const Todo = () => {
 
   const handleDelete = async (id) => {
     try {
+      setLoading(true)
       const delDoc = await api.deleteDocument(id)
       const nArr = todoList.filter((ele) => ele.id !== id)
+      setLoading(false)
       setTodoList([...nArr])
-      alert("Item removed")
+      //   alert("Item removed")
     } catch (err) {
+      setLoading(false)
       alert("Some error encountered")
       console.log(err.message)
     }
@@ -32,11 +40,12 @@ const Todo = () => {
 
   useEffect(() => {
     const fetch = async () => {
+      setLoading(true)
       const res = await api.listDocuments()
       const arr = res.documents.map((ele, i) => {
         return { data: ele.data, id: ele.$id }
       })
-      console.log(arr)
+      setLoading(false)
       setTodoList(arr)
     }
     fetch()
@@ -71,20 +80,26 @@ const Todo = () => {
       {/* Input Ends */}
 
       {/* List Starts */}
-      <div className='borde-4 borde-black flex justify-center font-body'>
-        <ul className='list-arrow text-xl w-8/12 borde-4 borde-black'>
-          {todoList.map((ele, i) => {
-            return (
-              <li
-                onClick={() => handleDelete(ele.id)}
-                className='my-2.5 w-fit hover:text-red-600 hover:line-through hover:cursor-pointer'
-              >
-                {ele.data}
-              </li>
-            )
-          })}
-        </ul>
-      </div>
+      {loading ? (
+        <div className='flex justify-center'>
+          <Spinner />
+        </div>
+      ) : (
+        <div className='borde-4 borde-black flex justify-center font-body'>
+          <ul className='list-arrow text-xl w-8/12 borde-4 borde-black'>
+            {todoList.map((ele, i) => {
+              return (
+                <li
+                  onClick={() => handleDelete(ele.id)}
+                  className='my-2.5 w-fit hover:text-red-600 hover:line-through hover:cursor-pointer'
+                >
+                  {ele.data}
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      )}
       {/* List Ends */}
     </div>
   )
