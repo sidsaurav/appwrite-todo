@@ -18,11 +18,23 @@ const Todo = () => {
     }
   }
 
+  const handleDelete = async (id) => {
+    try {
+      const delDoc = await api.deleteDocument(id)
+      const nArr = todoList.filter((ele) => ele.id !== id)
+      setTodoList([...nArr])
+      alert("Item removed")
+    } catch (err) {
+      alert("Some error encountered")
+      console.log(err.message)
+    }
+  }
+
   useEffect(() => {
     const fetch = async () => {
       const res = await api.listDocuments()
       const arr = res.documents.map((ele, i) => {
-        return ele.data
+        return { data: ele.data, id: ele.$id }
       })
       console.log(arr)
       setTodoList(arr)
@@ -61,8 +73,15 @@ const Todo = () => {
       {/* List Starts */}
       <div className='borde-4 borde-black flex justify-center font-body'>
         <ul className='list-arrow text-xl w-8/12 borde-4 borde-black'>
-          {todoList.map((ele) => {
-            return <li className='my-2.5'>{ele}</li>
+          {todoList.map((ele, i) => {
+            return (
+              <li
+                onClick={() => handleDelete(ele.id)}
+                className='my-2.5 w-fit hover:text-red-600 hover:line-through hover:cursor-pointer'
+              >
+                {ele.data}
+              </li>
+            )
           })}
         </ul>
       </div>
