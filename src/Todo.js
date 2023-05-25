@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react"
 import api from "./server/api"
 const Todo = () => {
+  const [todoList, setTodoList] = useState([])
   const [text, setText] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const addDoc = api.createDocument()
+      const addDoc = await api.createDocument({ data: text })
       setText("")
+      setTodoList([...todoList, text])
       alert("Field Added Successfully")
     } catch (err) {
       alert("Some Issue Encountered")
@@ -16,10 +18,17 @@ const Todo = () => {
     }
   }
 
-  useEffect(async () => {
-    const res = await api.listDocuments()
-    console.log(res)
-  })
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await api.listDocuments()
+      const arr = res.documents.map((ele, i) => {
+        return ele.data
+      })
+      console.log(arr)
+      setTodoList(arr)
+    }
+    fetch()
+  }, [])
 
   return (
     <div className='mx-24 mt-20 borde-4 borde-black flex flex-col justify-center'>
@@ -52,9 +61,9 @@ const Todo = () => {
       {/* List Starts */}
       <div className='borde-4 borde-black flex justify-center font-body'>
         <ul className='list-arrow text-xl w-8/12 borde-4 borde-black'>
-          <li className='my-2.5'>abc</li>
-          <li className='my-2.5'>abc</li>
-          <li className='my-2.5'>hello world</li>
+          {todoList.map((ele) => {
+            return <li className='my-2.5'>{ele}</li>
+          })}
         </ul>
       </div>
       {/* List Ends */}
