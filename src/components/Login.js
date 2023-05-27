@@ -1,8 +1,23 @@
 import React, { useState } from "react"
+import api from "../server/api"
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
+  const navigate = useNavigate()
+
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+
+  const handleSubmit = async () => {
+    try {
+      const res = await api.createSession(username, password)
+      alert("You're in!")
+      navigate("/")
+    } catch (err) {
+      console.log(err.message)
+      alert("Something's not working out :(")
+    }
+  }
 
   return (
     <div className='mx-24 mt-20 borde-4 borde-black flex flex-col justify-start'>
@@ -64,7 +79,7 @@ const Login = () => {
 
       {/* Login Button Starts */}
       <div className='mt-12 flex justify-center'>
-        <button className='border-4 border-black'>
+        <button className='border-4 border-black' onClick={handleSubmit}>
           <img
             src='https://res.cloudinary.com/dhv3pf4ak/image/upload/v1685209228/letmeinnn.jpg'
             alt='Login'
