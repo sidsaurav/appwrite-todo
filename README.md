@@ -1,6 +1,6 @@
 # Appwrite Todo App
 
-##Tech Stack Used
+## Tech Stack Used
 
 Frontend: React.js, TailWind CSS
 Backend: Appwrite (Open Source BaaS)
