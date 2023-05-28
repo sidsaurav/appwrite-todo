@@ -29,7 +29,7 @@ const Todo = () => {
   const handleDelete = async (id) => {
     try {
       setLoading(true)
-      const delDoc = await api.deleteDocument(id)
+      await api.deleteDocument(id)
       const nArr = todoList.filter((ele) => ele.id !== id)
       setLoading(false)
       setTodoList([...nArr])

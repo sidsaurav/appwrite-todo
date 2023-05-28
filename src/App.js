@@ -5,9 +5,10 @@ import api from "./server/api"
 import Login from "./components/Login"
 import Signup from "./components/Signup"
 import { useAuth } from "./hooks/useAuth"
+import Logout from "./components/Logout"
 const App = () => {
-  const { user, setUser } = useAuth()
-  console.log(user)
+  const { user } = useAuth()
+
   return (
     <>
       <nav className='flex justify-center text-xl mt-3'>
@@ -35,6 +36,7 @@ const App = () => {
         <Route path='/' element={<Todo />} />
         <Route path='/login' element={user ? <Navigate to='/' /> : <Login />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/logout' element={<Logout />} />
       </Routes>
     </>
   )

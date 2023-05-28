@@ -3,8 +3,10 @@ import api from "../server/api"
 import { useNavigate } from "react-router-dom"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { useAuth } from "../hooks/useAuth"
 
 const Login = () => {
+  const { setUser } = useAuth()
   const navigate = useNavigate()
 
   const [email, setEmail] = useState("")
@@ -14,8 +16,9 @@ const Login = () => {
     try {
       setLoading(true)
       const res = await api.createSession(email, password)
+      setUser(res)
+      console.log(res)
       setLoading(false)
-      toast.success("You're innn!")
       navigate("/")
     } catch (err) {
       setLoading(false)
