@@ -15,9 +15,9 @@ const Login = () => {
   const handleSubmit = async () => {
     try {
       setLoading(true)
-      const res = await api.createSession(email, password)
+      await api.createSession(email, password) //ye user obj return ni krta islye getAccount() call krna pdega
+      const res = await api.getAccount()
       setUser(res)
-      console.log(res)
       setLoading(false)
       navigate("/")
     } catch (err) {
