@@ -3,8 +3,10 @@ import api from "../server/api"
 import Spinner from "./Spinner"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { useAuth } from "../hooks/useAuth"
 
 const Todo = () => {
+  const { user } = useAuth()
   const [todoList, setTodoList] = useState([])
   const [loading, setLoading] = useState(false)
   const [text, setText] = useState("")
@@ -13,10 +15,20 @@ const Todo = () => {
     e.preventDefault()
     try {
       setLoading(true)
-      const addDoc = await api.createDocument({ data: text })
+      const addDoc = await api.createDocument({
+        data: text,
+        createdBy: user ? user.email.split("@")[0] : "guest",
+      })
       setLoading(false)
       setText("")
-      setTodoList([...todoList, { data: text, id: addDoc.$id }])
+      setTodoList([
+        ...todoList,
+        {
+          data: text,
+          id: addDoc.$id,
+          createdBy: user ? user.email.split("@")[0] : "guest",
+        },
+      ])
       toast.success("Item added")
     } catch (err) {
       setLoading(false)
@@ -47,7 +59,7 @@ const Todo = () => {
       setLoading(true)
       const res = await api.listDocuments()
       const arr = res.documents.map((ele, i) => {
-        return { data: ele.data, id: ele.$id }
+        return { data: ele.data, id: ele.$id, createdBy: ele.createdBy }
       })
       setLoading(false)
       setTodoList(arr)
@@ -113,14 +125,22 @@ const Todo = () => {
       ) : (
         <div className='borde-4 borde-black flex justify-center font-body'>
           <ul className='list-arrow text-xl w-8/12 borde-4 borde-black'>
-            {todoList.map((ele, i) => {
+            {todoList.map((ele) => {
               return (
                 <li
                   onClick={() => handleDelete(ele.id)}
                   className='my-2.5 w-fit hover:text-red-600 hover:line-through hover:cursor-pointer'
-                  key={i}
+                  key={ele.id}
                 >
-                  {ele.data}
+                  {console.log(ele)}
+                  {ele.data + " "}
+                  {
+                    <span className='font-sans ml-12 text-blue-600'>
+                      {ele.createdBy === "guest"
+                        ? "guest"
+                        : "@" + ele.createdBy}
+                    </span>
+                  }
                 </li>
               )
             })}

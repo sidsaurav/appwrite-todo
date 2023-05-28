@@ -18,6 +18,7 @@ export const UserProvider = ({ children }) => {
       }
     }
     fetchUser()
+    //ue is called only once when the app is loaded first
   }, [])
 
   return (
