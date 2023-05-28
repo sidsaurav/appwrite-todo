@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     fontFamily:{
         "title":["RetroInline"],
-        "body":["RetroReg"]
+        "body":["RetroReg"],
+        "sans":["ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI"]
     },
     listStyleType:{
     }
