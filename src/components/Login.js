@@ -30,8 +30,9 @@ const Login = () => {
   return (
     <div className='mx-24 mt-20 borde-4 borde-black flex flex-col justify-start'>
       {/* Heading Starts */}
-      {console.log('check for rerendering')}
-      <div className='text-center font-title text-6xl borde-4 borde-black mb-6'></div>
+      <div className='text-center font-title text-6xl borde-4 borde-black mb-6'>
+        Login
+      </div>
       {/* Heading Ends */}
 
       {/* credits starts */}
