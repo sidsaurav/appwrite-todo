@@ -73,7 +73,7 @@ const Todo = () => {
       setTodoList(arr)
     }
     fetch()
-  }, [])
+  }, [user])
 
   return (
     <div className='mx-24 mt-20 borde-4 borde-black flex flex-col justify-start'>
@@ -142,13 +142,17 @@ const Todo = () => {
                 >
                   {console.log(ele)}
                   {ele.data + ' '}
-                  {
-                    <span className='font-sans ml-12 text-blue-600'>
-                      {ele.createdBy === 'guest'
-                        ? 'guest'
-                        : '@' + ele.createdBy.split('@')[0]}
-                    </span>
-                  }
+                  <span
+                    className={`font-sans text-sm ml-2 text-white ${
+                      ele.createdBy === 'guest'
+                        ? 'bg-neutral-600'
+                        : 'bg-red-500'
+                    } pl-0.5 pr-1 pb-0.5`}
+                  >
+                    {ele.createdBy === 'guest'
+                      ? 'guest'
+                      : '@' + ele.createdBy.split('@')[0]}
+                  </span>
                 </li>
               )
             })}
