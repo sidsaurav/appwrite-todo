@@ -15,6 +15,10 @@ const Todo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      if (text === '') {
+        toast.error('kuch likho to bro :|')
+        return
+      }
       setLoading(true)
       const addDoc = await api.createDocument({
         data: text,
