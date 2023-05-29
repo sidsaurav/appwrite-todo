@@ -50,8 +50,10 @@ let api = {
       )
   },
 
-  listDocuments: () => {
-    return api.provider().database.listDocuments(databaseId, collectionId)
+  listDocuments: (query) => {
+    return api
+      .provider()
+      .database.listDocuments(databaseId, collectionId, query)
   },
 
   updateDocument: (documentId, data) => {

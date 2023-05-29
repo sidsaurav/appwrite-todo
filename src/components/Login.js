@@ -1,16 +1,16 @@
-import React, { useState } from "react"
-import api from "../server/api"
-import { useNavigate } from "react-router-dom"
-import { ToastContainer, toast } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
-import { useAuth } from "../hooks/useAuth"
+import React, { useState } from 'react'
+import api from '../server/api'
+import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { useAuth } from '../hooks/useAuth'
 
 const Login = () => {
   const { setUser } = useAuth()
   const navigate = useNavigate()
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const handleSubmit = async () => {
     try {
@@ -19,7 +19,7 @@ const Login = () => {
       const res = await api.getAccount()
       setUser(res)
       setLoading(false)
-      navigate("/")
+      navigate('/')
     } catch (err) {
       setLoading(false)
       toast.error(err.message)
@@ -30,9 +30,8 @@ const Login = () => {
   return (
     <div className='mx-24 mt-20 borde-4 borde-black flex flex-col justify-start'>
       {/* Heading Starts */}
-      <div className='text-center font-title text-6xl borde-4 borde-black mb-6'>
-        Login
-      </div>
+      {console.log('check for rerendering')}
+      <div className='text-center font-title text-6xl borde-4 borde-black mb-6'></div>
       {/* Heading Ends */}
 
       {/* credits starts */}

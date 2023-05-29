@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react"
-import api from "../server/api"
-import Spinner from "./Spinner"
-import { ToastContainer, toast } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
-import { useAuth } from "../hooks/useAuth"
+import React, { useEffect, useState } from 'react'
+import api from '../server/api'
+import Spinner from './Spinner'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { useAuth } from '../hooks/useAuth'
+import { Query } from 'appwrite'
 
 const Todo = () => {
   const { user } = useAuth()
   const [todoList, setTodoList] = useState([])
   const [loading, setLoading] = useState(false)
-  const [text, setText] = useState("")
+  const [text, setText] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -17,22 +18,22 @@ const Todo = () => {
       setLoading(true)
       const addDoc = await api.createDocument({
         data: text,
-        createdBy: user ? user.email.split("@")[0] : "guest",
+        createdBy: user ? user.email : 'guest',
       })
       setLoading(false)
-      setText("")
+      setText('')
       setTodoList([
         ...todoList,
         {
           data: text,
           id: addDoc.$id,
-          createdBy: user ? user.email.split("@")[0] : "guest",
+          createdBy: user ? user.email : 'guest',
         },
       ])
-      toast.success("Item added")
+      toast.success('Item added')
     } catch (err) {
       setLoading(false)
-      setText("")
+      setText('')
       toast.error(err.message)
       console.log(err.message)
     }
@@ -45,7 +46,7 @@ const Todo = () => {
       const nArr = todoList.filter((ele) => ele.id !== id)
       setLoading(false)
       setTodoList([...nArr])
-      toast.success("Item removed")
+      toast.success('Item removed')
       //   alert("Item removed")
     } catch (err) {
       setLoading(false)
@@ -57,7 +58,14 @@ const Todo = () => {
   useEffect(() => {
     const fetch = async () => {
       setLoading(true)
-      const res = await api.listDocuments()
+      console.log('user?.email', user?.email)
+      const res = await api
+        .provider()
+        .database.listDocuments(
+          process.env.REACT_APP_DATABASE_ID,
+          process.env.REACT_APP_COLLECTION_ID,
+          [Query.equal('createdBy', [user?.email, 'guest'])]
+        )
       const arr = res.documents.map((ele, i) => {
         return { data: ele.data, id: ele.$id, createdBy: ele.createdBy }
       })
@@ -133,12 +141,12 @@ const Todo = () => {
                   key={ele.id}
                 >
                   {console.log(ele)}
-                  {ele.data + " "}
+                  {ele.data + ' '}
                   {
                     <span className='font-sans ml-12 text-blue-600'>
-                      {ele.createdBy === "guest"
-                        ? "guest"
-                        : "@" + ele.createdBy}
+                      {ele.createdBy === 'guest'
+                        ? 'guest'
+                        : '@' + ele.createdBy.split('@')[0]}
                     </span>
                   }
                 </li>

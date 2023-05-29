@@ -21,7 +21,7 @@ const Signup = () => {
       setLoading(true)
       const res = await api.createAccount(email, password)
       setLoading(false)
-      navigate("/")
+      navigate("/login")
       toast.success("Welcome to the tribe!")
     } catch (err) {
       setLoading(false)
