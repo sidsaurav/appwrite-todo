@@ -4,7 +4,7 @@
 
 Frontend: React.js, TailWind CSS
 
-Backend: Appwrite (Open Source BaaS)
+Backend/Database: Appwrite (Open Source BaaS)
 
 Other libraries: React-Router v6, React-Toastify
 
