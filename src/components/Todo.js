@@ -59,13 +59,11 @@ const Todo = () => {
     const fetch = async () => {
       setLoading(true)
       console.log('user?.email', user?.email)
-      const res = await api
-        .provider()
-        .database.listDocuments(
-          process.env.REACT_APP_DATABASE_ID,
-          process.env.REACT_APP_COLLECTION_ID,
-          [Query.equal('createdBy', [user?.email, 'guest'])]
-        )
+      const res = await api.provider().database.listDocuments(
+        process.env.REACT_APP_DATABASE_ID,
+        process.env.REACT_APP_COLLECTION_ID
+        //   [Query.equal('createdBy', [user?.email, 'guest'])]
+      )
       const arr = res.documents.map((ele, i) => {
         return { data: ele.data, id: ele.$id, createdBy: ele.createdBy }
       })
