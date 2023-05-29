@@ -7,7 +7,7 @@ export default userContext
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null)
-  console.log("state change", user)
+  console.log("state change", user) //whenever state changes this runs
   useEffect(() => {
     const fetchUser = async () => {
       try {

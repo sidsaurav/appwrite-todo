@@ -8,7 +8,6 @@ import { useAuth } from "./hooks/useAuth"
 import Logout from "./components/Logout"
 const App = () => {
   const { user } = useAuth()
-
   return (
     <>
       <nav className='flex justify-center text-xl mt-3'>
@@ -25,6 +24,12 @@ const App = () => {
             </li>
           )}
 
+          {!user && (
+            <li className='mx-6'>
+              <Link to='/'>Home</Link>
+            </li>
+          )}
+
           {user && (
             <li className='mx-6'>
               <Link to='/logout'>Logout</Link>
@@ -32,6 +37,7 @@ const App = () => {
           )}
         </ul>
       </nav>
+
       <Routes>
         <Route path='/' element={<Todo />} />
         <Route path='/login' element={user ? <Navigate to='/' /> : <Login />} />
