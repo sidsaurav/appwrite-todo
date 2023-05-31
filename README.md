@@ -1,6 +1,8 @@
 # Appwrite Todo App
 
-Project Live at - https://todo-appwrite.netlify.app/
+This was a fun little Todo app made primarily to understand Appwrite.
+
+Project is Live at - https://todo-appwrite.netlify.app/
 
 ## Tech Stack Used
 
