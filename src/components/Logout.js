@@ -11,6 +11,7 @@ const Logout = () => {
       try {
         const res = await api.deleteCurrentSession()
         setUser(null)
+        navigate("/")
       } catch (err) {
         console.log(err.message)
       }
